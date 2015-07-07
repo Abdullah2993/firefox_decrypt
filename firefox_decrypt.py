@@ -241,9 +241,12 @@ def main():
 if __name__ == "__main__":
     try:
         #libnss = CDLL("libnss3.so")
-		firefox = r'c:\Program Files (x86)\Mozilla Firefox'
-		os.environ['PATH'] = ';'.join([firefox, os.environ['PATH']])
-		libnss = CDLL(os.path.join(firefox, 'nss3.dll'))
+		if os.name=='nt':
+			firefox = r'c:\Program Files (x86)\Mozilla Firefox'
+			os.environ['PATH'] = ';'.join([firefox, os.environ['PATH']])
+			libnss = CDLL(os.path.join(firefox, 'nss3.dll'))
+		else:
+			libnss = CDLL("libnss3.so")
     except Exception as e:
         err.write("Problems opening 'libnss3.so' required for password "
             "decryption\n")
